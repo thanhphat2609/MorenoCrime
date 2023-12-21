@@ -1,0 +1,49 @@
+* Lưu ý: Mở terminal
+
+
+Bước 1: Khởi tạo Namenode và Start các service của Hadoop. 
+* Khởi tạo Namenode: 
+	hdfs namenode -format
+
+* Start tất cả service: 
+	start-all.sh
+
+
+Bước 2: Tạo Data Lake và Data Warehouse trên HDFS.
+* Tạo Data Lake: 
+	hdfs dfs -mkdir -p /user/mynhung/datalake
+	hdfs dfs -chmod g+w /user/mynhung/datalake
+
+* Tạo Data Warehouse:
+	hdfs dfs -mkdir -p /user/hive/warehouse
+	hdfs dfs -chmod g+w /user/hive/warehouse
+
+Bước 3: Upload folder Moreno_Crime chứa các file dữ liệu lên DataLake
+hdfs dfs -put /home/mynhung/Downloads/moreno_crime /user/mynhung/datalake
+
+	
+Bước 4: Tạo File BatchProcessing.py. Viết các đoạn code PySpark để kết nối với Spark với Hive và đọc dữ liệu cũng như tạo các dataframe cần thiết cho Database và Table trong Hive. 
+
+
+Bước 5: Chạy file BatchProcessing.py
+spark-submit BatchProcessing.py
+
+Bước 6: Start Apache Hive Server (hiveserver2)
+* Truy cập đến thư mục bin trong Hive home:
+	cd $HIVE_HOME/bin
+* Khởi động server của Apache Hive:
+	./hive --service hiveserver2 --hiveconf hive.server2.thrift.port=10000 --hiveconf hive.root.logger=INFO,console --hiveconf hive.server2.enable.doAs=false
+
+Bước 7: Kết nối đến Apache Hive Server
+beeline -u jdbc:hive2://127.0.0.1:10000
+
+
+Bước 8: Kiểm tra Database và Table
+* Kiểm tra Database:
+	show databases;
+* Sử dụng database:
+	use database_name;
+* Kiểm tra table:
+	show tables;
+* Kiểm tra dữ liệu trong table:
+	select * from table_name;

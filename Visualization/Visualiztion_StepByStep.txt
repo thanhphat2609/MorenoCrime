@@ -1,0 +1,36 @@
+* Sau khi quá trình Batch Processing, ta có được Database là "moreno_crime.db" với 2 bảng dim và 1 bảng fact. Lúc này ta sẽ tiến hành trực quan hóa trên Superset
+
+Bước 1: Khởi động môi trường superset
+	source superset/bin/activate
+
+
+Bước 2: Cập nhật biến SUPERSET_SECRET_KEY và export biến FLASK_APP cần thiết cho superset
+* Cập nhật biến SUPERSET_SECRET_KEY
+	export SUPERSET_SECRET_KEY="superset-real-time"
+* Export biến FLASK_APP
+	export FLASK_APP="superset"
+
+
+Bước 3: Update database
+	superset db upgrade
+
+
+Bước 4: Khởi chạy superset trên port 8080
+	superset run -p 8080 --with-threads --reload --debugger	
+
+
+Bước 5: Khởi động HiveServer để Superset có thể connect đến (cd $HIVE_HOME/bin)
+	./hive --service hiveserver2 --hiveconf hive.server2.thrift.port=10000 --hiveconf hive.root.logger=INFO,console --hiveconf hive.server2.enable.doAs=false
+
+
+Bước 6: Tạo connect từ Superset đến HiveServer
+	hive://APP@localhost:10000/
+
+
+Bước 7: Update dashboard
+
+
+Bước 8: Set interval time để thực hiện real time data
+
+
+Bước 9: Chạy quá trình Streaming Processing để được kết quả hiển thị kết quả biểu đồ theo thời gian thực.

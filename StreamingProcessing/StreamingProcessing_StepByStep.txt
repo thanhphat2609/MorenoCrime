@@ -1,0 +1,60 @@
+Bước 1: Tạo file Python_Schedule.py và viết các đoạn code để lập lịch stream data cho kafka
+
+
+Bước 2: Tải lại dịch vụ systemctl và kiểm tra trạng thái của zookeeper và kafka-service (cd $KAFKA_HOME/bin)
+* Tải lại dịch vụ systemctl
+	sudo systemctl daemon-reload
+
+* Kiểm tra trạng thái zookeeper
+	sudo systemctl start zookeeper
+	
+* Kiểm tra trạng thái kafka-service
+	sudo systemctl start kafka
+
+
+Bước 3: Khởi động các service của Kafka (cd $KAFKA_HOME/bin)
+* Khởi động zookeeper
+	systemctl status zookeeper
+
+* Khởi động kafka-service
+	systemctl status kafka
+
+
+Bước 4: Khởi tạo topic cho Kafka để có thể stream data (cd $KAFKA_HOME)
+	bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic streamTopic
+	
+	
+Bước 5: Mở console Kafka để kiểm tra được data có được stream hay không (cd $KAFKA_HOME).
+	bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic streamTopic
+	
+	
+Bước 6: Viết file StreamingProcessing.py và viết đoạn code cấu hình kết nối đến topic của Kafka để nhận được dữ liệu stream và kết nối đến Hive để đưa dữ liệu stream vào Hive.
+
+
+Bước 7: Tạo thư mục checkpoint trên HDFS để tạo ra một bản sao trạng thái tác vụ hiện tại khi Spark stream data vào Hive. 
+hdfs dfs -mkdir checkpoint
+
+
+Bước 8: Tạo file flume_stream_kafka.conf để cấu hình stream dữ liệu từ Kafka -> Flume -> HDFS.
+
+
+Bước 8: Khởi chạy cùng lúc file Python, Spark và Flume
+* Khởi chạy file python
+	python3 Python_Schedule.py
+	 
+* Khởi chạy Spark nhận dữ liệu từ topic Kafka
+	spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 StreamingProcessing.py
+	
+* Khởi chạy Flume nhận dữ liệu từ topic Kafka	
+	flume-ng agent --conf-file /home/thanhphat/BigData/apache-flume-1.11.0-bin/conf/flume_stream_kafka.conf --name a1_to_kafka -Dflume.root.logger=INFO,console
+	
+	
+Bước 9: Kiểm tra dữ liệu trên HDFS
+* Kiểm tra dữ liệu được stream từ Flume trong thư mục /user/thanhphat/datalake/stream_moreno
+
+
+Bước 11: Kiểm tra dữ liệu với Apache Hive
+* Truy cập thư mục bin của Hive
+	cd $HIVE_HOME/bin và nhấn Hive để connect đến Apache Hive
+* Query dữ liệu
+	select count(*) from fact_morenocrime;
