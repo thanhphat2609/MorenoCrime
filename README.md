@@ -7,7 +7,7 @@ This is a simple project for analysis crime in moreno using Hadoop .
 
 ## Architecture 
 
-
+![SocialNetwork](https://github.com/thanhphatuit/MorenoCrime/assets/84914537/93123fbc-e745-430b-8c54-914f2ff0b8ca)
 
 ## Installation
 
@@ -15,7 +15,9 @@ This is a simple project for analysis crime in moreno using Hadoop .
 
 ```bash
 https://github.com/thanhphatuit/MorenoCrime.git
+
 Batch Processing: cd BatchProcessing
+
 Streaming Processing: cd StreamingProcessing
 ```
 
@@ -27,15 +29,16 @@ start-all.sh
 ```
 
 3. About Dataset
+```bash
 It is a graph dataset.
-
+```
 
 ## File Structure
 
 - `BatchProcessing.py`: File for process batch data.
 - `Python_Schedule.py`: File for schedule streaming data to Kafka.
 - `StreamingProcessing.py`: File for process streaming data from Kafka topic and real time visualization.
-- `flume_stream_kafka.conf`: Subscribe to Kafka topic for streaming data
+- `flume_stream_kafka.conf`: Subscribe to Kafka topic for streaming data.
 
 ## Video demo
 - BatchProcessing: .
