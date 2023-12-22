@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a simple project for analysis crime in moreno using Hadoop .
+This is a simple project for analysis crime in moreno using Hadoop.
 
 
 ## Architecture 
