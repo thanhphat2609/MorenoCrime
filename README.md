@@ -41,8 +41,6 @@ It is a graph dataset.
 - `flume_stream_kafka.conf`: Subscribe to Kafka topic for streaming data.
 
 ## Video demo
-- BatchProcessing: .
-- StreamingProcessing: .
-- Visualization: .
+- Link: [MorenoCrime_Video](https://drive.google.com/drive/folders/1NjoPPpFxRwKzhKIzfYHtL82b3ukojMld?usp=sharing).
 
 Feel free to explore and enhance the project as needed!
