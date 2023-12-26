@@ -1,9 +1,5 @@
 # Moreno Crime Analysis with Hadoop
 
-## Description
-
-This is a simple project for analysis crime in moreno using Hadoop.
-
 
 ## Architecture 
 
