@@ -1,4 +1,4 @@
-# Moreno Crime Analysis with Hadoop
+# Moreno Crime with Hadoop
 
 
 ## Architecture 
